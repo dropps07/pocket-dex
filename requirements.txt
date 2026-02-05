@@ -2,3 +2,4 @@ langgraph
 langchain_ollama
 langchain_community
 tavily-python
+python-dotenv
