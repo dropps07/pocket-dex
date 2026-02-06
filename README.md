@@ -2,7 +2,7 @@
 
 **kenkyū** is an autonomous AI Research Agent built using [LangGraph](https://github.com/langchain-ai/langgraph), [LangChain](https://github.com/langchain-ai/langchain), and [Ollama](https://ollama.com/). It automates the process of planning research queries, gathering information from the web, and synthesizing a comprehensive report.
 
-## 🚀 Features
+##  Features
 
 - **Multi-Agent Workflow**: Uses a stateful graph to manage research phases.
 - **Automated Planning**: Breaks down complex research tasks into targeted search queries.
@@ -10,7 +10,7 @@
 - **Local LLM Support**: Leverages Ollama (Llama 3) for privacy-conscious, local text generation and planning.
 - **State Management**: Maintains context throughout the research process.
 
-## 🏗️ Architecture
+## Architecture
 
 The agent follows a three-step sequential workflow:
 
@@ -18,7 +18,7 @@ The agent follows a three-step sequential workflow:
 2.  **Researcher**: Executes the search queries using the Tavily API and collects relevant content.
 3.  **Generator**: Synthesizes the collected information into a detailed final response.
 
-## 🛠️ Installation
+##  Installation
 
 ### 1. Clone the repository
 ```bash
