@@ -6,9 +6,11 @@ load_dotenv()
 if __name__ == "__main__":
     print("Initialising Research Agent...")
 
+    user_task = input("Enter your research question : ")
+
     # defining the users input
     initial_state = {
-        "task" : "Explain the difference between LangGraph and LangChain",
+        "task" : user_task,
         "plan" : [],
         "content" : [],
         "revision_number" : 0,

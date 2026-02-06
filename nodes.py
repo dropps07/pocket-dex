@@ -8,7 +8,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ****************** setting up the model *************************
-model = ChatOllama(model = "llama3" , format="json")
+model_json = ChatOllama(model = "llama3" , format="json")
+
+model_text = ChatOllama(model = "llama3" , temperature= 0)
 
 tavily = TavilySearchResults(max_results = 3)
 
@@ -33,14 +35,13 @@ def plan_node(state):
     """
 
     try:
-        response = model.invoke([HumanMessage(content=prompt)])
+        response = model_json.invoke([HumanMessage(content=prompt)])
         content = response.content.strip()
 
         if "```" in content:
             content = content.split("```")[1].replace("json", "").strip()
 
         plan_data = json.loads(content)
-
         steps = plan_data.get("steps", [task])
         
     except Exception as e:
@@ -83,5 +84,5 @@ CONTEXT : {content}
 QUESTION : {task}
 """
     
-    response = model.invoke([HumanMessage(content = prompt)])
+    response = model_text.invoke([HumanMessage(content = prompt)])
     return {"draft" : response.content} 
