@@ -3,43 +3,51 @@ import json
 from langchain_ollama import ChatOllama
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_core.messages import HumanMessage , SystemMessage
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # ****************** setting up the model *************************
-model = ChatOllama(model = "llama3" , format=json)
+model = ChatOllama(model = "llama3" , format="json")
 
 tavily = TavilySearchResults(max_results = 3)
 
 
 
 # ****************** setting up the planner node ******************
+# --- NODE 1: PLANNER ---
 def plan_node(state):
-    print("---Planning Step---")
+    print("---PLANNING STEP---")
     task = state["task"]
-
+    
+    steps = [task] 
+    
     prompt = f"""
-You are a Research Planner.
-Your task is to break down a users request into search queries.
+    You are a Research Planner.
+    Your task is to break down the user's request into search queries.
+    
+    USER REQUEST: {task}
+    
+    Return a JSON object with a single key 'steps' which is a list of strings.
+    Example: {{ "steps": ["search query 1", "search query 2"] }}
+    """
 
-User Request : {task}
-
-Return a JSON object with a single key "steps" which is a list of strings.
-Example : {{"Steps" : ["search query 1" , "search query 2"]}}
-"""
-    response = model.invoke([HumanMessage(content=prompt)])
-
-    # parsing the json response manually
     try:
+        response = model.invoke([HumanMessage(content=prompt)])
         content = response.content.strip()
-        if "```" in content :
-            content = content.split("```")[1].replace("json" , "").strip()
-            plan_data = json.loads(content)
-            steps = plan_data.get("steps" , [task])
-    except Exception as e:
-        print(f"JSON parsing Error: {e}")
-        steps = [task]
 
-    print(f"Generated Plan : {steps}")
-    return {"plan" : steps}
+        if "```" in content:
+            content = content.split("```")[1].replace("json", "").strip()
+
+        plan_data = json.loads(content)
+
+        steps = plan_data.get("steps", [task])
+        
+    except Exception as e:
+        print(f"JSON Parsing Error: {e}")
+        
+    print(f"Generated Plan: {steps}")
+    return {"plan": steps}
 
 
 # ****************** setting up the RESEARCHER node *******************
@@ -58,7 +66,6 @@ def researcher_node(state):
             print(f"Search error for {query}: {e}")
 
     return {"content" : content}
-
 
 
 # **************** setting up the generator node ***********************
