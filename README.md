@@ -49,7 +49,7 @@ Make sure you have [Ollama](https://ollama.com/) installed and the `llama3` mode
 ollama pull llama3
 ```
 
-## 🖥️ Usage
+##  Usage
 
 Run the main script to start the research agent:
 ```bash
@@ -58,7 +58,7 @@ python main.py
 
 Follow the prompt to enter your research question.
 
-## 🧰 Tech Stack
+##  Tech Stack
 
 - **Framework**: LangGraph
 - **LLM Orchestration**: LangChain
