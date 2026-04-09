@@ -18,7 +18,7 @@ if __name__ == "__main__":
     }
 
     # run the graph
-    print(f"Starting Task: {initial_state["task"]}")
+    print(f"Starting Task: {initial_state['task']}")
 
     for output in app.stream(initial_state):
         for node_name , state_update in output.items():
@@ -26,6 +26,6 @@ if __name__ == "__main__":
 
             # print specific updates
             if node_name == "planner":
-                print(f"Plan : {state_update.get("plan")}")
+                print(f"Plan : {state_update.get('plan')}")
             elif node_name == "generator":
-                print(f"Draft:\n{state_update.get("draft")}")
+                print(f"Draft:\n{state_update.get('draft')}")
